@@ -107,18 +107,21 @@ const SystemPage = () => {
           </div>
         )}
       </div>
-      <UpdateSystemModal
-        show={showUpdateModel}
-        onHide={() => setShowUpdateModel(false)}
-        reload={reloadData}
-        system={data}
-      />
-
-      <DeleteSystemModal
-        show={showDeleteModal}
-        onHide={() => setShowDeleteModal(false)}
-        system={data}
-      />
+      {showUpdateModel && (
+        <UpdateSystemModal
+          show={showUpdateModel}
+          onHide={() => setShowUpdateModel(false)}
+          reload={reloadData}
+          system={data}
+        />
+      )}
+      {showDeleteModal && (
+        <DeleteSystemModal
+          show={showDeleteModal}
+          onHide={() => setShowDeleteModal(false)}
+          system={data}
+        />
+      )}
     </>
   );
 };
