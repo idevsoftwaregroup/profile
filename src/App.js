@@ -6,6 +6,8 @@ import { Provider } from "react-redux";
 import { store } from "./redux/store";
 import Alert from "./components/common/Alert";
 import CreateSystemPage from "./Pages/CreateSystemPage/CreateSystemPage";
+import Allsystems from "./Pages/AllSystems/AllSystems";
+
 const App = () => {
   return (
     <Provider store={store}>
@@ -19,6 +21,7 @@ const App = () => {
             <Route path="system/:id" element={<SystemPage />} />
             <Route path="not-found" element={<NotFoundPage />} />
             <Route path="create-system" element={<CreateSystemPage />} />
+            <Route path="allsystems" element={<Allsystems />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </BrowserRouter>

@@ -7,6 +7,7 @@ import Button from "../../components/common/Button";
 import Modal from "../../components/common/Modal";
 import DeleteSystemModal from "./modals/DeleteSystemModal";
 import UpdateSystemModal from "./modals/UpdateSystemModal";
+
 const SystemPage = () => {
   const fileStorageUrl = process.env.REACT_APP_FILESTORAGE_API_URL;
   const { id } = useParams();
@@ -15,37 +16,46 @@ const SystemPage = () => {
   const [showUpdateModel, setShowUpdateModel] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const navigate = useNavigate();
+
   useEffect(() => {
-    if (loading) {
-      if (!id) {
+    const fetchData = async () => {
+      try {
+        setLoading(true); // Set loading state to true before fetching
+        if (!id) {
+          navigate("/not-found");
+          return;
+        }
+        const res = await Services.GET(`GetSystem/${id}`);
+        if (res.success && res.data) {
+          setData(res.data);
+        } else {
+          navigate("/not-found");
+        }
+      } catch (err) {
+        console.error("Error fetching system data:", err);
         navigate("/not-found");
-        return;
-      } else {
-        Services.GET(`IT/${id}`)
-          .then((res) => {
-            if (res.success && res.data) {
-              setData(res.data);
-              setLoading(false);
-            } else {
-              navigate("/not-found");
-            }
-          })
-          .catch((err) => {
-            console.log(err);
-            navigate("/not-found");
-          });
+      } finally {
+        setLoading(false); // Set loading state to false after fetching
       }
-    }
-  }, [loading]);
+    };
+
+    fetchData(); // Call fetchData when component mounts
+  }, [id, navigate]);
 
   const reloadData = async () => {
-    setLoading(true);
-    const res = await Services.GET(`IT/${id}`);
-    if (res.success && res.data) {
-      setData(res.data);
-      setLoading(false);
-    } else {
+    try {
+      setLoading(true);
+      const res = await Services.GET(`GetSystem/${id}`);
+      if (res.success && res.data) {
+        setData(res.data);
+      } else {
+        navigate("/not-found");
+      }
+    } catch (err) {
+      console.error("Error fetching system data:", err);
       navigate("/not-found");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -79,14 +89,56 @@ const SystemPage = () => {
               </div>
               <div className="flex items-center gap-x-2 text-[13px] ">
                 <label className="text-gray-500">نام سیستم :</label>
-                <div className={`${data.systemName ? "" : "text-red-600"}`}>
-                  {data.systemName ? data.systemName : "ثبت نشده"}
+                <div className={`${data.computerName ? "" : "text-red-600"}`}>
+                  {data.computerName ? data.computerName : "ثبت نشده"}
                 </div>
               </div>
               <div className="flex items-center gap-x-2 text-[13px] ">
                 <label className="text-gray-500">مکان :</label>
                 <div className={`${data.location ? "" : "text-red-600"}`}>
                   {data.location ? data.location : "ثبت نشده"}
+                </div>
+              </div>
+              <div className="flex items-center gap-x-2 text-[13px] ">
+                <label className="text-gray-500">کاربر سیستم :</label>
+                <div className={`${data.user ? "" : "text-red-600"}`}>
+                  {data.user ? data.user : "ثبت نشده"}
+                </div>
+              </div>
+              <div className="flex items-center gap-x-2 text-[13px] ">
+                <label className="text-gray-500">سیستم عامل :</label>
+                <div className={`${data.os ? "" : "text-red-600"}`}>
+                  {data.os ? data.os : "ثبت نشده"}
+                </div>
+              </div>
+              <div className="flex items-center gap-x-2 text-[13px] ">
+                <label className="text-gray-500">حافظه سیستم :</label>
+                <div className={`${data.ram ? "" : "text-red-600"}`}>
+                  {data.ram ? data.ram : "ثبت نشده"}
+                </div>
+              </div>
+              <div className="flex items-center gap-x-2 text-[13px] ">
+                <label className="text-gray-500">نام مادربورد :</label>
+                <div className={`${data.mainBoardName ? "" : "text-red-600"}`}>
+                  {data.mainBoardName ? data.mainBoardName : "ثبت نشده"}
+                </div>
+              </div>
+              <div className="flex items-center gap-x-2 text-[13px] ">
+                <label className="text-gray-500">مدل مادربورد :</label>
+                <div className={`${data.mainBoardModel ? "" : "text-red-600"}`}>
+                  {data.mainBoardModel ? data.mainBoardModel : "ثبت نشده"}
+                </div>
+              </div>
+              <div className="flex items-center gap-x-2 text-[13px] ">
+                <label className="text-gray-500">ریزپردازنده ( CPU‌ ) :</label>
+                <div className={`${data.cpu ? "" : "text-red-600"}`}>
+                  {data.cpu ? data.cpu : "ثبت نشده"}
+                </div>
+              </div>
+              <div className="flex items-center gap-x-2 text-[13px] ">
+                <label className="text-gray-500">توضیحات :</label>
+                <div className={`${data.description ? "" : "text-red-600"}`}>
+                  {data.description ? data.description : "ثبت نشده"}
                 </div>
               </div>
               {data.description ? (

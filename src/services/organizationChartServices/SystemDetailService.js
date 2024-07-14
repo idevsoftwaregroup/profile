@@ -144,3 +144,33 @@ export const DELETE = async (url, body) => {
     return Failed();
   }
 };
+// Function to fetch all systems
+export const getAllSystems = async () => {
+  try {
+    const {data} = await axios.get(`${process.env.REACT_APP_CHART_API_URL}${controller}/GetAllSystems`);
+    if (data && data.success !== null && data.success !== undefined) {
+      if (data.success) {
+        return Succeed(
+          data.message ? data.message : null,
+          data.object ? data.object : data.list ? data.list : null
+        );
+      }
+      return Failed(
+        data.message ? data.message : null,
+        data.exMessage ? data.exMessage : null,
+        data.object ? data.object : data.list ? data.list : null
+      );
+    }
+    return Succeed("دریافت اطلاعات با موفقیت انجام شد", data);
+  } catch (error) {
+    if (error.response && error.response.data) {
+      const errorData = error.response.data;
+      return Failed(
+        errorData.message ? errorData.message : null,
+        errorData.exMessage ? errorData.exMessage : null,
+        errorData.data ? errorData.data : null
+      );
+    }
+    return Failed();
+  }
+};
