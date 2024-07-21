@@ -1,13 +1,14 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ProfilePage from "./Pages/ProfilePage/ProfilePage";
+import Profiles from "./Pages/AllProfiles/Profiles";
 
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Profiles />} />
-        <Route path="profile/:id" element={<ProfilePage />} />
+        <Route path="/profile/:id" element={<ProfilePage />} /> {/* Added a slash before 'profile' */}
       </Routes>
     </BrowserRouter>
   );
