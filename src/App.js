@@ -1,7 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ProfilePage from "./Pages/ProfilePage/ProfilePage";
-import Profiles from "./Pages/AllProfiles/Profiles";
 
 const App = () => {
   return (
