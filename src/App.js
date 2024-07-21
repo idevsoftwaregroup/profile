@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ProfilePage from "./Pages/ProfilePage/ProfilePage";
-import Profiles from "./Pages/AllProfiles/Profiles";
+import Profiles from "./Pages/ProfilePage/Profiles";
 
 const App = () => {
   return (
@@ -9,7 +9,7 @@ const App = () => {
       <Routes>
       // eslint-disable-next-line react/jsx-no-undef
         <Route path="/" element={<Profiles />} />
-        <Route path="/profile/:id" element={<ProfilePage />} /> {/* Added a slash before 'profile' */}
+        <Route path="/profile/:id" element={<ProfilePage />} />
       </Routes>
     </BrowserRouter>
   );
