@@ -8,7 +8,7 @@ const App = () => {
     <BrowserRouter>
       <Routes>
       // eslint-disable-next-line react/jsx-no-undef
-      <Route path="/" element={<Profiles />} />
+        <Route path="/" element={<Profiles />} />
         <Route path="/profile/:id" element={<ProfilePage />} /> {/* Added a slash before 'profile' */}
       </Routes>
     </BrowserRouter>
